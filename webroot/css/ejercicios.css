@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+        *{
+            box-sizing: border-box;
+            font-family: Oswald;
+            font-weight: 400; 
+          }
+
+          html{
+            scroll-behavior: smooth;
+          }
+
+          body{
+            margin: 0;
+            color:black;
+            font-family: Roboto, Arial;
+            background-color: rgb(255, 253, 253);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+          }
+
+          
+        header{
+          background-color: rgb(10, 10, 10);
+          color: white;
+          height: 120px;
+          align-items: center;
+          text-align: center;
+        }
+
+
+        h2{
+          font-size: 3vw;
+          border-bottom: 2px solid orange;
+          padding: 4px;
+          margin: 10px 12vw 0;
+          align-self: center;
+        }
+        
+        main{
+            padding: 20px 50px ;
+        }
+
+          a {
+            text-decoration: none; 
+            color: black;
+          }
+          a:hover {
+            color: orange;
+          }
+          
+          pre *{
+              font-family:monospace;
+              font-weight: 700;
+          }
+          
+        footer{
+            margin-top: auto;
+            background-color: rgb(10, 10, 10);
+            padding: 4px;
+            color:white;
+            font-size: 20px;
+            font-style:normal;
+          }
+
+          .foo-txt{
+            text-align: center;
+          }
+
+          .miweb-link{
+            color:white;
+            text-decoration: none;
+          }
+
+          .miweb-link:hover{
+            color:orange;
+          }
+          
+          .github{
+            height:30px;
+            padding-left: 10px;  
+          }
+          
+          .casa{
+            height:30px;
+            padding-left: 10px;  
+          }
+
+
+          @media (min-width:621px) and (max-width: 1001px){
+              h2{
+              font-size: 20px;
+            }
+          }
+
+          @media (max-width: 620px){
+             h2{
+              font-size: 16px;
+            }
+
+          }
+
+          @media (min-width: 1800px){
+            h2{
+              font-size: 36px;
+            }
+          }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title> Error 404</title>
+    <link rel="icon" href="../webroot/images/favicon.png" type="image/png"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <style>
+
+
+      *{
+
+        box-sizing: border-box;
+        font-family: Oswald;
+        font-weight: 400;  
+      }
+      body{
+        background-color:white;
+        font-family: Oswald;
+        color: black;
+        align-items: center;
+      }
+
+      main{
+        background-color: rgb(252, 248, 248);
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        margin:200px auto;
+        width:500px;
+        height: 500px;
+        align-self: center;
+        border: 5px solid orange;
+        padding: 0 auto;
+      }
+
+      main:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 6px  orange;
+      }
+
+      .error{
+        margin-bottom: 100px;
+        margin-top: 50px;
+        display: flex;
+        align-items: center;
+      }
+
+      .error-txt{
+        font-size: 70px;
+        font-weight: 700;
+      }
+
+      span{
+        color: orange;
+      }
+
+
+      .desc{
+        margin-bottom: 50px;
+        font-size: 24px;
+      }
+
+      .volver{
+        margin-bottom: 50px;
+        font-size: 20px;
+        text-decoration: solid;
+        color: black;
+      }
+
+      .volver:hover{
+        color: orange;
+        cursor:pointer
+      }
+    </style>
+
+    
+  </head>
+  <body>
+    <main class="main">
+      <div class="error">
+        <div class="error-txt">Error <span>404</span></div>
+      </div>
+      <div class="desc"> Esta página está en proceso de desarrollo.</div>
+      <a class="volver" href="../indexProyectoTema3.php"> Volver al índice ➜ </a>
+    </main>
+  </body>
+
+</html>
