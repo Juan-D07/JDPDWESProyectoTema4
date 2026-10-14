@@ -11,7 +11,7 @@
     <body>
         <header>
 
-            <h2> UT4: CARACTERÍSTICAS DEL LENGUAJE PHP</h2>
+            <h2> UT4: TÉCNICAS DE ACCESO A DATOS EN PHP</h2>
 
         </header>
 
@@ -33,7 +33,9 @@
                             CreaBD2JDPProyectoTema4
                         </td>
                         <td>
-                            img
+                            <a href="mostrarcodigo/mostrarCrea.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -41,7 +43,9 @@
                             CargaInicialBD2JDPProyectoTema4
                         </td>
                         <td>
-                            img
+                            <a href="mostrarcodigo/mostrarCargaInicial.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -49,7 +53,9 @@
                             BorraBD2JDPProyectoTema4
                         </td>
                         <td>
-                            img
+                            <a href="mostrarcodigo/mostrarBorra.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
@@ -85,6 +91,7 @@
                         </td>
                         <td>
                         </td>
+
                     </tr>
                     <tr>
                         <td>
