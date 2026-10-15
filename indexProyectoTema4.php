@@ -34,7 +34,7 @@
                         </td>
                         <td>
                             <a href="mostrarcodigo/mostrarCrea.php" >
-                                <div class="ejecutar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
                             </a>
                         </td>
                     </tr>
@@ -44,7 +44,7 @@
                         </td>
                         <td>
                             <a href="mostrarcodigo/mostrarCargaInicial.php" >
-                                <div class="ejecutar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
                             </a>
                         </td>
                     </tr>
@@ -54,7 +54,7 @@
                         </td>
                         <td>
                             <a href="mostrarcodigo/mostrarBorra.php" >
-                                <div class="ejecutar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
                             </a>
                         </td>
                     </tr>
@@ -80,24 +80,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            0
-                        </td>
-                        <td>
-                            Hola mundo
-                        </td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-
-                    </tr>
+                    
                     <tr>
                         <td>
                             1
                         </td>
                         <td>
+                             Conexión a la base de datos con la cuenta usuario y tratamiento de errores.
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio01PDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio01PDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
                         </td>

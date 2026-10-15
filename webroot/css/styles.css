@@ -65,6 +65,7 @@ a:hover {
   
 }
 
+.mostrar-img,
 .ejecutar-img{
     background-color: black;
     width: 48px;
@@ -72,14 +73,23 @@ a:hover {
     margin: auto;
 }
 
-.ejecutar-img:hover{
+.ejecutar-img:hover,
+.mostrar-img:hover{
     background-color: orange;
 }
 
-.ejecutar-img img{
+
+.mostrar-img img{
     width: 32px;
     margin: 2px 8px;
 }
+
+.ejecutar-img img{
+    width: 22px;
+    margin: 7px 14px;
+}
+
+
 
 
 table{
