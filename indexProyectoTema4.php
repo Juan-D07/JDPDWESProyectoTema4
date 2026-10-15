@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>
-                            Nombre
+                            Nombre Scripts
                         </th>
                         <th>
                             Mostrar
@@ -30,7 +30,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            CreaBD2JDPProyectoTema4
+                            CreaBDJDPProyectoTema4
                         </td>
                         <td>
                             <a href="mostrarcodigo/mostrarCrea.php" >
@@ -40,7 +40,7 @@
                     </tr>
                     <tr>
                         <td>
-                            CargaInicialBD2JDPProyectoTema4
+                            CargaInicialBDJDPProyectoTema4
                         </td>
                         <td>
                             <a href="mostrarcodigo/mostrarCargaInicial.php" >
@@ -50,7 +50,7 @@
                     </tr>
                     <tr>
                         <td>
-                            BorraBD2JDPProyectoTema4
+                            BorraBDJDPProyectoTema4
                         </td>
                         <td>
                             <a href="mostrarcodigo/mostrarBorra.php" >

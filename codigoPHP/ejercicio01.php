@@ -1,0 +1,23 @@
+<?php
+$host = 'localhost';
+$db   = 'your_database_name';
+$user = 'root';
+$pass = 'your_password'; // Leave empty '' if using default XAMPP/Laragon
+$charset = 'utf8mb4';
+
+// Use the mysql prefix—it works perfectly for MariaDB
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
+
+try {
+     $pdo = new PDO($dsn, $user, $pass, $options);
+     echo "Connected to MariaDB successfully using PDO!";
+} catch (\PDOException $e) {
+     throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
+?>
