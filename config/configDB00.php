@@ -5,14 +5,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
  */
 //Configuracion de Casa
-define('HOST', "mysql:host=192.168.1.100;dbname=DBJDPDWESProyectoTema4;charset=utf8mb4");
-define('USER', "userJDPDWESProyectoTema4");
-define('PASS', "paso");
-
-//Configuracion de Clase
-//define('HOST', "mysql:host=10.199.9.114;dbname=DBJDPDWESProyectoTema4;");
+//define('HOST', "mysql:host=192.168.1.100;dbname=DBJDPDWESProyectoTema4;charset=utf8mb4");
 //define('USER', "userJDPDWESProyectoTema4");
 //define('PASS', "paso");
+
+//Configuracion de Clase
+define('HOST', "mysql:host=10.199.9.114;dbname=DBJDPDWESProyectoTema4;");
+define('USER', "userJDPDWESProyectoTema4");
+define('PASS', "paso");
 
 
 ?>

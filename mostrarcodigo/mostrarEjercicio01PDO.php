@@ -12,7 +12,7 @@
 <body>
   <header>
 
-      <h2> UT3: TÉCNICAS DE ACCESO A DATOS EN PHP</h2>
+      <h2> UT4: TÉCNICAS DE ACCESO A DATOS EN PHP</h2>
   </header>
 
   <main>

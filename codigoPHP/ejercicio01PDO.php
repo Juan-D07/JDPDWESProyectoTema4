@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Tema 3 · Juan Miguel Dominguez </title>
+    <title> Tema 4 · Juan Miguel Dominguez </title>
     <link rel="stylesheet" href="../webroot/css/ejercicios.css">
 </head>
 <body>
   <header>
-      <h2> UT3: CARACTERÍSTICAS DEL LENGUAJE PHP</h2>
+      <h2> UT4: TÉCNICAS DE ACCESO A DATOS EN PHP</h2>
   </header>
   <main>
       
 <?php
 
-require_once '../config/configDB00.php';
+//require_once '../config/configDB00.php';
+//$conexionPDO = new PDO(HOST, USER, PASS);
+
+// opciones de driver, que se pueden inicializar con la conexion pdo
 //$opcionesDriver= [
 //    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, 
 //    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -24,21 +27,53 @@ require_once '../config/configDB00.php';
 
 try {
     //conexion correcta
-     $conexionPDO = new PDO(HOST, USER, PASS);
-     echo "Conectado a MariaDB <br/>";
-     echo $conexionPDO->getAttribute(PDO::ATTR_CONNECTION_STATUS)."<br/>";
-     echo $conexionPDO->getAttribute(PDO::ATTR_FETCH_TABLE_NAMES)."<br/>";
-     echo $conexionPDO->getAttribute(PDO::ATTR_SERVER_VERSION)."<br/>";
+    //                      dsn, usuario, contraseña
+     $miDB = new PDO("mysql:host=10.199.9.114;dbname=DBJDPDWESProyectoTema4;", "userJDPDWESProyectoTema4", "paso");
+     $miDB->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+     
+     $atributosPDO=[
+        "ATTR_AUTOCOMMIT",
+        "ATTR_ERRMODE",
+        "ATTR_SERVER_VERSION",
+        "ATTR_CLIENT_VERSION",
+        "ATTR_SERVER_INFO",
+        "ATTR_CONNECTION_STATUS",
+        "ATTR_CASE",
+        "ATTR_ORACLE_NULLS",
+        "ATTR_PERSISTENT",
+        "ATTR_STATEMENT_CLASS",
+        "ATTR_DRIVER_NAME",
+        "ATTR_STRINGIFY_FETCHES",
+        "ATTR_EMULATE_PREPARES",
+        "ATTR_DEFAULT_FETCH_MODE",
+        "ATTR_DEFAULT_STR_PARAM"];
+     
+     echo "<h4>Primera Conexion a MariaDB</h4> <br/>";
+     echo '<ul>';
+     foreach ($atributosPDO as $valor) {
+         try{
+             echo"<li><strong> $valor: </strong>". $miDB->getAttribute(constant("PDO::".$valor))."</li>";
+         } catch (PDOException $e) {
+            echo"<li><strong> $valor: </strong> Error->". $e->getMessage()."</li>";
+         }
+         
+     }
+     echo '</ul>';
 } catch (PDOException $e) {
-    echo "ERROR ". e->getMessage()."<br/>";
+    echo "<span style='color:red;'> Codigo de error: ". $e->getCode()." <span><br/>";
+    echo "<span style='color:red;'> Mensaje de error: ". $e->getMessage()." <span><br/>";
 }
+
+
+echo "<h4>Segunda Conexion a MariaDB</h4> <br/>";
 try {
     //conexion incorrecta
-     $conexion = new PDO(HOST, "usuarioIncorrecto", PASS);
+    
+    $conexion = new PDO("mysql:host=10.199.9.114;dbname=DBJDPDWESProyectoTema4;", "usuarioIncorrecto","paso");
 
 } catch (PDOException $e) {
-    error_log("Conexion con la bases de datos fallida: ". $e->getMessage());
-    echo "ERROR ". $e->getMessage()."<br/>";
+    echo "<span style='color:red;'> Codigo de error: ". $e->getCode()." <span><br/>";
+    echo "<span style='color:red;'> Mensaje de error: ". $e->getMessage()." <span><br/>";
 }
 ?>
   </main>

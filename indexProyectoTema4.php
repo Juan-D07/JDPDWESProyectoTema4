@@ -99,8 +99,14 @@
                             </a>
                         </td>
                         <td>
+                            <a href="codigoPHP/ejercicio01MYSQLi.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
+                            <a href="mostrarcodigo/mostrarEjercicio01MYSQLi.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                     <tr>
