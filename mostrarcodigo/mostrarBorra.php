@@ -18,7 +18,7 @@
   <main>
 
       <?php
-$archivo = '../scriptDB/BorraDB2XXDWESProyectoTema4.sql';
+$archivo = '../scriptDB/BorraDBJDPDWESProyectoTema4.sql';
  
 if ($archivo && file_exists($archivo)) {
     echo "<h2>Viendo el codigo de: " . htmlspecialchars($archivo) . "</h2>";
@@ -26,7 +26,6 @@ if ($archivo && file_exists($archivo)) {
     highlight_file($archivo);
 } else {
     echo "<h2>Error: El archivo no existe.</h2>";
-    echo "<a href='../indexProyectoTema3.php'>⬅ Volver al inicio</a>";
 }
 ?>
         

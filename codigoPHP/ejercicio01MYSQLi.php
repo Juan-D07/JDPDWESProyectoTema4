@@ -14,25 +14,24 @@
       
 <?php
 
-require_once '../config/configDB00.php';
-
 
 try {
     //conexion correcta
     //                          hostname, usuario, contraseña, base de datos
-     $conexionMYSQLi = new mysqli("10.199.9.114", USER, PASS, "DBJDPDWESProyectoTema4");
+     $conexionMYSQLi = new mysqli("10.199.9.114", "userJDPDWESProyectoTema4", "paso", "DBJDPDWESProyectoTema4");
      echo "Conectado a MariaDB con MYSQLi<br/>";
      echo $conexionMYSQLi->server_info ."<br/>";
-} catch (PDOException $e) {
-    echo "ERROR ". e->getMessage()."<br/>";
+} catch (mysqli_sql_exception $e) {
+    echo "Conexion con la bases de datos fallida: ". $e->getMessage();
+    echo "Codigo de error ". $e->getCode()."<br/>";
 }
 try {
     //conexion incorrecta
-     $conexion = new PDO(HOST, "usuarioIncorrecto", PASS);
+    $conexionMYSQLi = new mysqli("10.199.9.114", "UsuarioIncorrecto", "paso", "DBJDPDWESProyectoTema4");
 
-} catch (PDOException $e) {
-    error_log("Conexion con la bases de datos fallida: ". $e->getMessage());
-    echo "ERROR ". $e->getMessage()."<br/>";
+} catch (mysqli_sql_exception $e) {
+    echo "Conexion con la bases de datos fallida: ". $e->getMessage();
+    echo "Codigo de error ". $e->getCode()."<br/>";
 }
 ?>
   </main>

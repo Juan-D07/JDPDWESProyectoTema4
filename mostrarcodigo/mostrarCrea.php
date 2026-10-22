@@ -18,7 +18,7 @@
   <main>
 
       <?php
-$archivo = '../scriptDB/CreaDB2XXDWESProyectoTema4.sql';
+$archivo = '../scriptDB/CreaDBJDPDWESProyectoTema4.sql';
  
 if ($archivo && file_exists($archivo)) {
     echo "<h2>Viendo el codigo de: " . htmlspecialchars($archivo) . "</h2>";

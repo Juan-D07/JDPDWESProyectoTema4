@@ -14,8 +14,7 @@
       
 <?php
 
-//require_once '../config/configDB00.php';
-//$conexionPDO = new PDO(HOST, USER, PASS);
+require_once '../config/configDBPDO.php';
 
 // opciones de driver, que se pueden inicializar con la conexion pdo
 //$opcionesDriver= [
@@ -28,7 +27,7 @@
 try {
     //conexion correcta
     //                      dsn, usuario, contraseña
-     $miDB = new PDO("mysql:host=10.199.9.114;dbname=DBJDPDWESProyectoTema4;", "userJDPDWESProyectoTema4", "paso");
+     $miDB = new PDO(DSN, USER, PASS);
      $miDB->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
      
      $atributosPDO=[

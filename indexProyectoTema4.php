@@ -20,7 +20,7 @@
                 <thead>
                     <tr>
                         <th>
-                            Nombre Scripts
+                            Ficheros Auxiliares
                         </th>
                         <th>
                             Mostrar
@@ -54,6 +54,26 @@
                         </td>
                         <td>
                             <a href="mostrarcodigo/mostrarBorra.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            configDBPDO
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarconfigDBPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Libreria de Validacion
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarLibreriaValidacion.php" >
                                 <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
                             </a>
                         </td>
@@ -114,6 +134,17 @@
                             2
                         </td>
                         <td>
+                             select query
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio02PDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio02PDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
                         </td>
@@ -125,7 +156,18 @@
                             3
                         </td>
                         <td>
+                            insercion
                          </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio03PDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio03PDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
                         <td>
                          </td>
                         <td>
