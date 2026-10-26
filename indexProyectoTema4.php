@@ -134,7 +134,7 @@
                             2
                         </td>
                         <td>
-                             select query
+                             Mostrar el contenido de la tabla Departamento y el número de registros
                         </td>
                         <td>
                             <a href="codigoPHP/ejercicio02PDO.php" >
@@ -156,7 +156,7 @@
                             3
                         </td>
                         <td>
-                            insercion
+                            Formulario para añadir un departamento a la tabla Departamento con validación de entrada y control de errores
                          </td>
                         <td>
                             <a href="codigoPHP/ejercicio03PDO.php" >

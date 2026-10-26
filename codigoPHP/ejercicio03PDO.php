@@ -9,7 +9,8 @@
             input{
                 margin: 10px 5px;
             }
-            #nombre,#fechaNacimiento,#sueldo{
+            #T02_CodDepartamento,#T02_DescDepartamento,
+            #T02_FechaCreacionDepartamento,#T02_VolumenDeNegocio{
                 background-color: #fffce0;
                 border:1px solid black;
             }
@@ -22,12 +23,30 @@
             input[type=number] {
                 -moz-appearance: textfield;
             }
-            
             .advertancia{
                 font-size: 12px;
                 color:gray;
                 margin-top: 12px;
                 
+            }
+            table{
+                border-collapse: collapse;
+            }
+            td{
+                width:300px;
+                border: 1px solid black;
+                text-align: center;
+            }
+            .titulo{
+                background-color: orange;               
+            }
+            tr:not(.titulo){
+                td:nth-child(4){
+                    text-align: right;
+                }
+                td:nth-child(2){
+                    text-align: left;
+                }
             }
         </style>
 
@@ -89,37 +108,56 @@
 
                 try{
                     // inciamos conexion con la base de datos con un objeto PDO
-                    $miDB = new PDO(DSN, USERNAME, PASSWORD);
+                    $miDB = new PDO(DSN, USER, PASS);
                     // Activamos el modo de excepciones de PDO por seguridad
                     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // insercion a la bases de datos                  
-                    $consultaInsert = $miDB->exec("INSERT INTO T02_Departamento VALUES (".$aRespuesta["T02_CodDepartamento"].",".$aRespuesta["T02_DescDepartamento"].",". $aRespuesta["T02_FechaCreacionDepartamento"].",".$aRespuesta["T02_VolumenDeNegocio"] .", null)");
+                    //$consultaInsert = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio) VALUES (".$aRespuesta["T02_CodDepartamento"].",".$aRespuesta["T02_DescDepartamento"].",". $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d").",".$aRespuesta["T02_VolumenDeNegocio"] .")");
+                    // Asignacion de variables preparadas para la inserción
                     
-                    echo "<h4 color='green'>Insersion exitosa</h4> <br/>";
+                    $sCodigoDepInsert = $aRespuesta["T02_CodDepartamento"];
+                    $sDescripcionDepInsert = $aRespuesta["T02_DescDepartamento"];
+                    $sFechaCreacionDepInsert = $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d");
+                    $svolumenNegocioDepInsert = $aRespuesta["T02_VolumenDeNegocio"];
+
+                    // Construccion de la sentencia SQL para insertar el registro (codigo de juan)
+                    $sqlInsert = <<<sql
+                    INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio) VALUES (
+                    '$sCodigoDepInsert',
+                    '$sDescripcionDepInsert',
+                    '$sFechaCreacionDepInsert',
+                    $svolumenNegocioDepInsert)
+                sql;
+
+                    // Ejecucion de la consulta de insercion devuelviendo el numero de filas (codigo de juan)
+                    $miDB->exec($sqlInsert);
+                    echo "<h4 style='margin:0px;color:green'>Insersion exitosa</h4> <br/>";
+                    
                     
                     $consulta1 = $miDB->query('select * from T02_Departamento');
                     
-                    echo "<h4>Tabla departamentos</h4> <br/>";
+                    echo "<h4 >Tabla departamentos</h4> <br/>";
                     echo '<table>';
                     echo '<tr class="titulo"> <td>Codigo</td> <td>Descripcion</td><td>FechaCreacion</td><td>VolumenNegocio</td><td>FechaBaja</td></tr>';
-                    while ($registro = $consulta1->fetchObject()) {
+                    while ($oDepartamento = $consulta1->fetchObject()) {
                         echo '<tr>';
-                        echo '<td>' . $registro->T02_CodDepartamento . '</td>';
-                        echo '<td>' . $registro->T02_DescDepartamento . '</td>';
-                        $fechaCreacionDepartamento= new DateTime($registro->T02_FechaCreacionDepartamento);
+                        echo '<td>' . $oDepartamento->T02_CodDepartamento . '</td>';
+                        echo '<td>' . $oDepartamento->T02_DescDepartamento . '</td>';
+                        $fechaCreacionDepartamento= new DateTime($oDepartamento->T02_FechaCreacionDepartamento);
                         echo '<td>' . $fechaCreacionDepartamento->format('d/m/Y') . '</td>';
-                        echo '<td>' . number_format($registro->T02_VolumenDeNegocio,2,',','.') . ' €</td>';
-                        if (is_null($registro->T02_FechaBajaDepartamento)){
+                        echo '<td>' . number_format($oDepartamento->T02_VolumenDeNegocio,2,',','.') . ' €</td>';
+                        if (is_null($oDepartamento->T02_FechaBajaDepartamento)){
                             echo '<td></td>';
                         }else{
-                            $fechaBajaDepartamento=new DateTime($registro->T02_FechaBajaDepartamento);
+                            $fechaBajaDepartamento=new DateTime($oDepartamento->T02_FechaBajaDepartamento);
                             echo '<td>'.$fechaBajaDepartamento->format('d/m/Y').'</td>';
                         }
 
                         echo '</tr>';
                     }
                     echo '</table>';
+                    echo "<p><a href='". $_SERVER['PHP_SELF']. "'>Añadir otro departamento</a></p>";
                     
                 } catch (PDOException $e) {
                     echo "<span style='color:red;'> Codigo de error: " . $e->getCode() . " <span><br/>";
