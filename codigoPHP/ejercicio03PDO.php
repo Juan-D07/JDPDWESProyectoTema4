@@ -36,6 +36,7 @@
                 width:300px;
                 border: 1px solid black;
                 text-align: center;
+                padding: 4px;
             }
             .titulo{
                 background-color: orange;               
@@ -46,6 +47,11 @@
                 }
                 td:nth-child(2){
                     text-align: left;
+                }
+            }
+            tr{
+                td:nth-child(1){
+                    max-width: 70px
                 }
             }
         </style>
@@ -80,7 +86,7 @@
             if (isset($_REQUEST["enviar"])) {
                 // Validar Entrada
                 
-                $aError["T02_CodDepartamento"] = validacionFormularios::comprobarAlfabetico($_REQUEST["T02_CodDepartamento"],3,1,1);
+                $aError["T02_CodDepartamento"] = validacionFormularios::comprobarAlfabetico($_REQUEST["T02_CodDepartamento"],3,3,1);
                 $aError["T02_DescDepartamento"] = validacionFormularios::comprobarAlfabetico($_REQUEST["T02_DescDepartamento"],1000,1,1);
                 
                 $aError["T02_FechaCreacionDepartamento"] = validacionFormularios::validarFecha($_REQUEST["T02_FechaCreacionDepartamento"],date("m/d/Y"),"01/01/1900", 1);

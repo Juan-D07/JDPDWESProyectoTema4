@@ -13,6 +13,7 @@
                 width:300px;
                 border: 1px solid black;
                 text-align: center;
+                padding: 4px;
             }
             .titulo{
                 background-color: orange;               
@@ -23,6 +24,15 @@
                 }
                 td:nth-child(2){
                     text-align: left;
+                }
+            }
+            tr{
+                td:nth-child(1){
+                    max-width: 70px
+                }
+                td:nth-child(3),
+                td:nth-child(5){
+                    max-width: 200px
                 }
             }
         </style>

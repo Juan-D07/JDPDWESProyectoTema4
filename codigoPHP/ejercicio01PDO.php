@@ -68,7 +68,7 @@ echo "<h4>Segunda Conexion a MariaDB</h4> <br/>";
 try {
     //conexion incorrecta
     
-    $conexion = new PDO("mysql:host=10.199.9.114;dbname=DBJDPDWESProyectoTema4;", "usuarioIncorrecto","paso");
+    $conexion = new PDO(DSN, "usuarioIncorrecto","paso");
 
 } catch (PDOException $e) {
     echo "<span style='color:red;'> Codigo de error: ". $e->getCode()." <span><br/>";
