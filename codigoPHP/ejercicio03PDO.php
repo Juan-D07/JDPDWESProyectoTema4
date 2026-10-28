@@ -176,7 +176,7 @@
                 // Mostrar Formulario
                 ?>
             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" name="formulario" method="post" novalidate>
-                    <h3>Formulario: Tratamiento</h3>
+                    <h3>Alta Departamentos</h3>
                     <label for="T02_CodDepartamento" >Codigo del Departamento:</label>
                     
                     <input type="text" name="T02_CodDepartamento" id="T02_CodDepartamento" value="<?php echo !empty($_REQUEST["T02_CodDepartamento"]) ? htmlspecialchars($_REQUEST["T02_CodDepartamento"]): '' ?>"/>
