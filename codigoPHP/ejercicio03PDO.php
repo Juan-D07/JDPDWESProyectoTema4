@@ -27,7 +27,6 @@
                 font-size: 12px;
                 color:gray;
                 margin-top: 12px;
-                
             }
             table{
                 border-collapse: collapse;
@@ -109,7 +108,6 @@
                 $aRespuesta["T02_DescDepartamento"]= htmlspecialchars($_REQUEST["T02_DescDepartamento"]);
                 $aRespuesta["T02_FechaCreacionDepartamento"] = new DateTime($_REQUEST["T02_FechaCreacionDepartamento"]);
                 $aRespuesta["T02_VolumenDeNegocio"] = floatval(str_replace(',','.',$_REQUEST["T02_VolumenDeNegocio"]));
-
 
 
                 try{

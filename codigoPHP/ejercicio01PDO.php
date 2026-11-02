@@ -28,7 +28,6 @@ try {
     //conexion correcta
     //                      dsn, usuario, contraseña
      $miDB = new PDO(DSN, USER, PASS);
-     $miDB->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
      
      $atributosPDO=[
         "ATTR_AUTOCOMMIT",

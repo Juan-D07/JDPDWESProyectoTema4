@@ -52,7 +52,6 @@
                 $fechaCreacionDepartamento;
                 $fechaBajaDepartamento;
                 $miDB = new PDO(DSN, USER, PASS);
-                $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                 $consulta1 = $miDB->query('select * from T02_Departamento');
 

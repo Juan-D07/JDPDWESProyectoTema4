@@ -178,6 +178,7 @@
                             4
                         </td>
                         <td>
+                            Formulario de búsqueda de departamentos por descripción 
                         </td>
                         <td>
                             <a href="codigoPHP/ejercicio04PDO.php" >
@@ -199,6 +200,16 @@
                             5
                         </td>
                         <td>
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio05PDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio05PDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
                         </td>

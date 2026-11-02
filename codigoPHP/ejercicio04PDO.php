@@ -67,9 +67,10 @@
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <label for="busquedaDescripcion">Descripción del Departamento:</label><br><br>
                         <input type="text" name="busquedaDescripcion" id="busquedaDescripcion" value="<?php echo isset($_REQUEST['busquedaDescripcion'])&&empty($aError['busquedaDescripcion']) ? htmlspecialchars($_REQUEST['busquedaDescripcion']) : ''; ?>">
+                        <button type="submit" name="buscar">Buscar</button>
+                        <br>
                         <?php echo !empty($aError["busquedaDescripcion"]) ? "<span style='color:red;'>" . $aError['busquedaDescripcion'] . "</span>": '' ?>
                         <br>
-                        <button type="submit" name="buscar">Buscar</button>
                     </form>  
             </div>
             <?php
@@ -79,8 +80,6 @@
                 try{
                     // inciamos conexion con la base de datos con un objeto PDO
                     $miDB = new PDO(DSN, USER, PASS);
-                    // Activamos el modo de excepciones de PDO por seguridad
-                    $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                     // Ejecucion de la consulta                   
                     $listaDepartamentos = $miDB->query("select * from T02_Departamento where T02_DescDepartamento like '%" . $aRespuesta['busquedaDescripcion'] . "%'");                    
