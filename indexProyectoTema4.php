@@ -222,7 +222,7 @@
                             6
                         </td>
                         <td>
-                            Cargua registros en la tabla Departamento utilizando una consulta preparada.
+                            Carga registros en la tabla Departamento utilizando una consulta preparada.
                         </td>
                         <td>
                             <a href="codigoPHP/ejercicio06PDO.php" >
@@ -244,6 +244,7 @@
                             7
                         </td>
                         <td>
+                            Importacion de datos de la bases de datos
                         </td>
                         <td>
                         </td>
@@ -255,6 +256,17 @@
                             8
                         </td>
                         <td>
+                            Exportacion de datos de la bases de datos
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio08PDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio08PDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
                         </td>

@@ -58,39 +58,40 @@
                 //codigo, descripcion, fecha alta, volumen
                 $aDepartamentosnuevos=[
                     [":codDepartamento" => "DDD",
-                    ":desDepartamento" => "descripcion a",
+                    ":desDepartamento" => "descripcion d",
                     ":fechaAltaDepartamento"=>    "2025-05-07",
                     ":volumenNegocioDepartamento" => 33456.36,
                     ":fechaBajaDepartamento" => null,    
                     ],
                     [":codDepartamento" => "EEE",
-                    ":desDepartamento" => "descripcion b",
+                    ":desDepartamento" => "descripcion e",
                     ":fechaAltaDepartamento"=>    "2020-05-07",
-                    ":volumenNegocioDepartamento" => 33456.36,
+                    ":volumenNegocioDepartamento" => 10.43,
                     ":fechaBajaDepartamento" => $fechaActual->format("Y-m-d"), 
                     ],
                     [":codDepartamento" => "FFF",
-                    ":desDepartamento" => "descripcion c",
+                    ":desDepartamento" => "descripcion f",
                     ":fechaAltaDepartamento"=>    $fechaActual->format("Y-m-d"),
-                    ":volumenNegocioDepartamento" => 33456.36,
+                    ":volumenNegocioDepartamento" => 480000.01,
                     ":fechaBajaDepartamento" => null, 
                     ]
                 ];
                 
+                
+                //insercion con consulta preparada
+                //iniciamos consulta dentro de un heredoc
+                $sqlInsert = <<<sql
+                INSERT INTO T02_Departamento VALUES (
+                :codDepartamento,
+                :desDepartamento,
+                :fechaAltaDepartamento,
+                :volumenNegocioDepartamento,
+                :fechaBajaDepartamento)
+                sql;
+                //preparamos la insercion
+                $insercionDepartamento=$miDB->prepare($sqlInsert);
                 foreach ($aDepartamentosnuevos as $aDatosCadaDepartamento){
-                    //insercion con consulta preparada
-                    //iniciamos consulta dentro de un heredoc
-                    $sqlInsert = <<<sql
-                    INSERT INTO T02_Departamento VALUES (
-                    :codDepartamento,
-                    :desDepartamento,
-                    :fechaAltaDepartamento,
-                    :volumenNegocioDepartamento,
-                    :fechaBajaDepartamento)
-                    sql;
-                    //preparamos la insercion
-                    $insercionDepartamento=$miDB->prepare($sqlInsert);
-                    //ejecutar la insercion
+                    //ejecutamos la insercion por cada deparatamento
                     $insercionDepartamento->execute($aDatosCadaDepartamento);
                 }
 
@@ -118,8 +119,6 @@
                 }
                 echo '</table>';
             } catch (PDOException $e) {
-                $miDB->rollBack();               
-                echo "<span style='color:red;'>Transacción fallida. Cambios deshechos (ROLLBACK).</span>";
                 echo "<span style='color:red;'> Codigo de error: " . $e->getCode() . " <span><br/>";
                 echo "<span style='color:red;'> Mensaje de error: " . $e->getMessage() . " <span><br/>";
             } finally {
