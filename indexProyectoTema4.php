@@ -156,7 +156,7 @@
                             3
                         </td>
                         <td>
-                            Formulario para añadir un departamento a la tabla Departamento con validación de entrada y control de errores
+                            Formulario para añadir un departamento a la tabla Departamento
                          </td>
                         <td>
                             <a href="codigoPHP/ejercicio03PDO.php" >
@@ -200,6 +200,7 @@
                             5
                         </td>
                         <td>
+                            Añade tres registros a nuestra tabla Departamento utilizando una transacción
                         </td>
                         <td>
                             <a href="codigoPHP/ejercicio05PDO.php" >
@@ -221,6 +222,17 @@
                             6
                         </td>
                         <td>
+                            Cargua registros en la tabla Departamento utilizando una consulta preparada.
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio06PDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio06PDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
                         </td>

@@ -113,18 +113,14 @@
                 try{
                     // inciamos conexion con la base de datos con un objeto PDO
                     $miDB = new PDO(DSN, USER, PASS);
-                    // Activamos el modo de excepciones de PDO por seguridad
-                    $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                    // insercion a la bases de datos                  
-                    //$consultaInsert = $miDB->exec("INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio) VALUES (".$aRespuesta["T02_CodDepartamento"].",".$aRespuesta["T02_DescDepartamento"].",". $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d").",".$aRespuesta["T02_VolumenDeNegocio"] .")");
+                    // insercion a la bases de datos sin consulta preparada   
+                    /*            
                     // Asignacion de variables preparadas para la inserción
-                    
                     $sCodigoDepInsert = $aRespuesta["T02_CodDepartamento"];
                     $sDescripcionDepInsert = $aRespuesta["T02_DescDepartamento"];
                     $sFechaCreacionDepInsert = $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d");
                     $svolumenNegocioDepInsert = $aRespuesta["T02_VolumenDeNegocio"];
-
                     // Construccion de la sentencia SQL para insertar el registro (codigo de juan)
                     $sqlInsert = <<<sql
                     INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio) VALUES (
@@ -133,9 +129,30 @@
                     '$sFechaCreacionDepInsert',
                     $svolumenNegocioDepInsert)
                 sql;
-
                     // Ejecucion de la consulta de insercion devuelviendo el numero de filas (codigo de juan)
                     $miDB->exec($sqlInsert);
+                     */
+                    //insersion con cosultapreparada
+                    //iniciamos consulta dentro de un heredoc
+                    $sqlInsert = <<<sql
+                    INSERT INTO T02_Departamento VALUES (
+                    :sDepartamentoCodigo,
+                    :sDepartamentoDescripcion,
+                    :sDepartamentoFechaAlta,
+                    :sDepartamentoVolumenNegocio,
+                    null)
+                    sql;
+                    //preparamos la insercion
+                    $insercionDepartamento=$miDB->prepare($sqlInsert);
+                    //array con los datos de departamento
+                    $aDatosDepartamentoInsercion=
+                    [":sDepartamentoCodigo" => $aRespuesta["T02_CodDepartamento"],
+                    ":sDepartamentoDescripcion" => $aRespuesta["T02_DescDepartamento"],
+                    ":sDepartamentoFechaAlta" => $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d"),
+                    ":sDepartamentoVolumenNegocio" => $aRespuesta["T02_VolumenDeNegocio"]];
+                    //ejecutar la insercion
+                    $insercionDepartamento->execute($aDatosDepartamentoInsercion);
+                    
                     echo "<h4 style='margin:0px;color:green'>Insersion exitosa</h4> <br/>";
                     
                     

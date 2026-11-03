@@ -52,9 +52,14 @@
                 $fechaCreacionDepartamento;
                 $fechaBajaDepartamento;
                 $miDB = new PDO(DSN, USER, PASS);
-
-                $consulta1 = $miDB->query('select * from T02_Departamento');
-
+                
+                //Sin consulta preparada
+                //$consulta1 = $miDB->query('select * from T02_Departamento');
+                
+                //Con consulta preparada
+                $consulta1 = $miDB->prepare('select * from T02_Departamento');
+                $consulta1->execute();
+                
                 echo "<h4>Tabla departamentos</h4> <br/>";
                 echo '<table>';
                 echo '<tr class="titulo"> <td>Codigo</td> <td>Descripcion</td><td>FechaCreacion</td><td>VolumenNegocio</td><td>FechaBaja</td></tr>';
