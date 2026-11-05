@@ -48,8 +48,6 @@
 
             try {
                 //declaracion de variables de cuando se muestra la tabla
-                $fechaCreacionDepartamento;
-                $fechaBajaDepartamento;
                 $fechaActual= new DateTime();
                 //creacion de conexion 
                 $miDB = new PDO(DSN, USER, PASS);
@@ -57,23 +55,23 @@
                 //array de datos de departamentos
                 //codigo, descripcion, fecha alta, volumen
                 $aDepartamentosnuevos=[
-                    [":codDepartamento" => "DDD",
-                    ":desDepartamento" => "descripcion d",
-                    ":fechaAltaDepartamento"=>    "2025-05-07",
-                    ":volumenNegocioDepartamento" => 33456.36,
-                    ":fechaBajaDepartamento" => null,    
+                    ["codDepartamento" => "DDD",
+                    "descDepartamento" => "descripcion d",
+                    "fechaAltaDepartamento"=>    "2025-05-07",
+                    "volumenNegocioDepartamento" => 33456.36,
+                    "fechaBajaDepartamento" => null,    
                     ],
-                    [":codDepartamento" => "EEE",
-                    ":desDepartamento" => "descripcion e",
-                    ":fechaAltaDepartamento"=>    "2020-05-07",
-                    ":volumenNegocioDepartamento" => 10.43,
-                    ":fechaBajaDepartamento" => $fechaActual->format("Y-m-d"), 
+                    ["codDepartamento" => "EEE",
+                    "descDepartamento" => "descripcion e",
+                    "fechaAltaDepartamento"=>    "2020-05-07",
+                    "volumenNegocioDepartamento" => 10.43,
+                    "fechaBajaDepartamento" => $fechaActual->format("Y-m-d"), 
                     ],
-                    [":codDepartamento" => "FFF",
-                    ":desDepartamento" => "descripcion f",
-                    ":fechaAltaDepartamento"=>    $fechaActual->format("Y-m-d"),
-                    ":volumenNegocioDepartamento" => 480000.01,
-                    ":fechaBajaDepartamento" => null, 
+                    ["codDepartamento" => "FFF",
+                    "descDepartamento" => "descripcion f",
+                    "fechaAltaDepartamento"=>    $fechaActual->format("Y-m-d"),
+                    "volumenNegocioDepartamento" => 480000.01,
+                    "fechaBajaDepartamento" => null, 
                     ]
                 ];
                 
@@ -83,7 +81,7 @@
                 $sqlInsert = <<<sql
                 INSERT INTO T02_Departamento VALUES (
                 :codDepartamento,
-                :desDepartamento,
+                :descDepartamento,
                 :fechaAltaDepartamento,
                 :volumenNegocioDepartamento,
                 :fechaBajaDepartamento)
@@ -92,17 +90,23 @@
                 $insercionDepartamento=$miDB->prepare($sqlInsert);
                 foreach ($aDepartamentosnuevos as $aDatosCadaDepartamento){
                     //ejecutamos la insercion por cada deparatamento
-                    $insercionDepartamento->execute($aDatosCadaDepartamento);
+                    $insercionDepartamento->bindParam(":codDepartamento", $aDatosCadaDepartamento["codDepartamento"]);
+                    $insercionDepartamento->bindParam(":descDepartamento", $aDatosCadaDepartamento["descDepartamento"]);
+                    $insercionDepartamento->bindParam(":fechaAltaDepartamento", $aDatosCadaDepartamento["fechaAltaDepartamento"]);
+                    $insercionDepartamento->bindParam(":volumenNegocioDepartamento", $aDatosCadaDepartamento["volumenNegocioDepartamento"]);
+                    $insercionDepartamento->bindParam(":fechaBajaDepartamento", $aDatosCadaDepartamento["fechaBajaDepartamento"]);
+                    $insercionDepartamento->execute();
+                    //$insercionDepartamento->execute($aDatosCadaDepartamento);
                 }
 
                 echo "<h4>Insercion Completa</h4> <br/>";
                 
                 //hacer query de la tabla
-                $consulta1 = $miDB->query('select * from T02_Departamento');
+                $selectDepartamentos = $miDB->query('select * from T02_Departamento');
                 echo '<table>';
                 // mostrar la tabla
                 echo '<tr class="titulo"> <td>Codigo</td> <td>Descripcion</td><td>FechaCreacion</td><td>VolumenNegocio</td><td>FechaBaja</td></tr>';
-                while ($oDepartamento = $consulta1->fetchObject()) {
+                while ($oDepartamento = $selectDepartamentos->fetchObject()) {
                     echo '<tr>';
                     echo '<td>' . $oDepartamento->T02_CodDepartamento . '</td>';
                     echo '<td>' . $oDepartamento->T02_DescDepartamento . '</td>';

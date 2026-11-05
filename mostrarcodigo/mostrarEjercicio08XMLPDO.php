@@ -18,7 +18,7 @@
   <main>
 
       <?php
-$archivo = '../codigoPHP/ejercicio08PDO.php';
+$archivo = '../codigoPHP/ejercicio08XMLPDO.php';
  
 if ($archivo && file_exists($archivo)) {
     echo "<h2>Viendo el codigo de: " . htmlspecialchars($archivo) . "</h2>";

@@ -244,7 +244,7 @@
                             7
                         </td>
                         <td>
-                            Importacion de datos de la bases de datos
+                            Importacion de datos de la bases de datos XML
                         </td>
                         <td>
                         </td>
@@ -256,21 +256,35 @@
                             8
                         </td>
                         <td>
-                            Exportacion de datos de la bases de datos
+                            Exportacion de datos de la bases de datos XML
                         </td>
                         <td>
-                            <a href="codigoPHP/ejercicio08PDO.php" >
+                            <a href="codigoPHP/ejercicio08XMLPDO.php" >
                                 <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
                             </a>
                         </td>
                         <td>
-                            <a href="mostrarcodigo/mostrarEjercicio08PDO.php" >
+                            <a href="mostrarcodigo/mostrarEjercicio08XMLPDO.php" >
                                 <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
                             </a>
                         </td>
+                    </tr>
+                    <tr>
                         <td>
+                            8
                         </td>
                         <td>
+                            Exportacion de datos de la bases de datos JSON
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio08JSONPDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio08JSONPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
