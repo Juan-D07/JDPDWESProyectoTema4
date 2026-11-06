@@ -13,7 +13,7 @@
             .advertancia{
                 font-size: 12px;
                 color:gray;
-                margin-top: 12px;                
+                margin-top: 12px;
             }
             table{
                 border-collapse: collapse;
@@ -24,7 +24,7 @@
                 text-align: center;
             }
             .titulo{
-                background-color: orange;               
+                background-color: orange;
             }
             tr:not(.titulo){
                 td:nth-child(4){
@@ -44,85 +44,83 @@
 
         <main>
             <?php
+            // Calculamos la ruta del archivo JSON en la carpeta tmp
+            require_once '../config/configDBPDO.php';
+            //comprobamos si el archivo existe
+            if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/JDPDWESProyectoTema4/tmp/departamentos.json')) {
 
-                        // Calculamos la ruta del archivo JSON en la carpeta tmp
-                        $rutaFicheroJSON = $_SERVER["DOCUMENT_ROOT"] . '/MDCDWESProyectoTema4/tmp/departamentos.json';
+                // Lee todo el contenido del archivo JSON como una cadena de texto
+                $textoJSON = file_get_contents($_SERVER["DOCUMENT_ROOT"] . '/JDPDWESProyectoTema4/tmp/departamentos.json');
 
-                        // Comprobamos si el archivo existe
-                        if (file_exists($rutaFicheroJSON)) {
+                // Convierte el texto JSON a un array asociativo de PHP
+                // https://www.php.net/manual/es/function.json-decode.php
+                $aDepartamentos = json_decode($textoJSON, true);
+            
+                // Verificamos que el JSON no este vacio y sea un array valido
+                if (is_array($aDepartamentos) && count($aDepartamentos) > 0) {
+                    try {
+                                            
+                        // Iniciamos la conexion con la base de datos con el objeto PDO
+                        $miDB = new PDO(DSN, USER, PASS);
+                        // Iniciamos la transaccion para asegurar que o se importan todos, o ninguno
+                        $miDB->beginTransaction();
 
-                            // Leetodo el contenido del archivo JSON como una unica cadena de texto
-                            // https://www.php.net/manual/es/function.file-get-contents.php
-                            $textoJSON = file_get_contents($rutaFicheroJSON);
+                        //insercion con consulta preparada
+                        //iniciamos consulta dentro de un heredoc
+                        $sqlInsert = <<<sql
+                        INSERT INTO T02_Departamento VALUES (
+                        :codDepartamento,
+                        :descDepartamento,
+                        :fechaCreacionDepartamento,
+                        :volumenDeNegocio,
+                        :fechaBajaDepartamento)
+                        sql;
+                        //preparamos la insercion
+                        $insercionDepartamento = $miDB->prepare($sqlInsert);
 
-                            // Convierte el texto JSON a un array asociativo de PHP
-                            // https://www.php.net/manual/es/function.json-decode.php
-                            $aDepartamentos = json_decode($textoJSON, true);
+                        // Recorremos cada departamento del array PHP
+                        foreach ($aDepartamentos as $departamento) {
+                        
+                            // Extraemos los valores. Si FechaBaja esta vacia, le asignamos null.
+                            $codDepartamento = $departamento['CodDepartamento'];
+                            $descDepartamento = $departamento['DescDepartamento'];
+                            $fechaCreacionDepartamento = $departamento['FechaCreacionDepartamento'];
+                            $volumenDeNegocio = $departamento['VolumenDeNegocio'];
+                            $fechaBajaDepartamento = (!empty($departamento['FechaBajaDepartamento'])) ? $departamento['FechaBajaDepartamento'] : null;
 
-                            // Verificamos que el JSON no este vacio y sea un array valido
-                            if (is_array($aDepartamentos) && count($aDepartamentos) > 0) {
-
-                                require_once '../config/configDBPDO.php';
-
-                                try {
-                                    // Instanciacion del objeto PDO
-                                    $miDB = new PDO(HOST, USER, PASS);
-
-                                    // Iniciamos la transaccion para asegurar que o se importan todos, o ninguno
-                                    $miDB->beginTransaction();
-
-                                    // Preparamos la consulta de insercion
-                                    $sqlInsert = 'INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES (:CodDepartamento, :DescDepartamento, :FechaCreacionDepartamento, :VolumenDeNegocio, :FechaBajaDepartamento)';
-                                    $sentenciaPreparada = $miDB->prepare($sqlInsert);
-
-                                    $registrosImportados = 0;
-
-                                    // Recorremos cada departamento del array PHP
-                                    foreach ($aDepartamentos as $departamento) {
-
-                                        // Extraemos los valores. Si FechaBaja esta vacia, le asignamos null.
-                                        $codigo = $departamento['CodDepartamento'];
-                                        $descripcion = $departamento['DescDepartamento'];
-                                        $fecha = $departamento['FechaCreacionDepartamento'];
-                                        $volumen = $departamento['VolumenDeNegocio'];
-                                        $fechaBaja = (!empty($departamento['FechaBajaDepartamento'])) ? $departamento['FechaBajaDepartamento'] : null;
-
-                                        // Ejecutamos la consulta preparada pasando un array asociativo con los nombres de los campos
-                                        $sentenciaPreparada->execute([
-                                            ':CodDepartamento' => $codigo,
-                                            ':DescDepartamento' => $descripcion,
-                                            ':FechaCreacionDepartamento' => $fecha,
-                                            ':VolumenDeNegocio' => $volumen,
-                                            ':FechaBajaDepartamento' => $fechaBaja
-                                        ]);
-
-                                        $registrosImportados++;
-                                    }
-
-                                    // Si el bucle termina sin errores, confirmamos la transacción
-                                    $miDB->commit();
-
-                                    echo "<div class='mensaje-exito'>";
-                                    echo "<h3>Importación completada con éxito.</h3>";
-                                    echo "<p>Se han importado <b>{$registrosImportados}</b> departamentos desde el archivo JSON a la base de datos.</p>";
-                                    echo "</div>";
-                                } catch (PDOException $miExceptionPDO) {
-                                    // Si ocurre un error, deshacemos todos los cambios
-                                    $miDB->rollBack();
-
-                                    echo "<div class='error'>";
-                                    echo "<h3 style='margin-top:0;'>Error al importar en la base de datos.</h3>";
-                                    echo "<p>La transaccion ha sido cancelada. Ningun registro ha sido importado.</p>";
-                                    echo "<p><b>Mensaje:</b> " . $miExceptionPDO->getMessage() . "</p>";
-                                    echo "<p><b>Código:</b> " . $miExceptionPDO->getCode() . "</p>";
-                                    echo "</div>";
-                                } finally {
-                                    unset($miDB);
-                                }
-                            }
+                            // Ejecutamos la consulta preparada pasando un array asociativo con los nombres de los campos
+                            $insercionDepartamento->execute([
+                                ':codDepartamento' => $codDepartamento,
+                                ':descDepartamento' => $descDepartamento,
+                                ':fechaCreacionDepartamento' => $fechaCreacionDepartamento,
+                                ':volumenDeNegocio' => $volumenDeNegocio,
+                                ':fechaBajaDepartamento' => $fechaBajaDepartamento
+                            ]);
                         }
+
+                        // Si el bucle termina sin errores, confirmamos la transacción
+                        $miDB->commit();
+                        
+                        // Mostramos el mensaje y el enlace web
+                        echo "<h3>Importacion completada con exito.</h3>";
+                        echo "<p>Se han importado $aDepartamentos->length departamentos del archivo guardado en: <b>" . $_SERVER['DOCUMENT_ROOT'] . "/JDPDWESProyectoTema4/tmp/departamentos.json</b></p>";
+                        echo "<a href='ejercicio02PDO.php' target='_blank' style='color: #green; font-weight: bold; text-decoration: underline;'>Ver Tabla</a>";
                     
-                    ?>
+                    } catch (PDOException $miExceptionPDO) {
+                        // Si ocurre un error, deshacemos todos los cambios
+                        $miDB->rollBack();
+
+                        echo "<div class='error'>";
+                        echo "<h3 style='margin-top:0;'>Error en la base de datos.</h3>";
+                        echo "<p><b>Mensaje:</b> " . $miExceptionPDO->getMessage() . "</p>";
+                        echo "<p><b>Código:</b> " . $miExceptionPDO->getCode() . "</p>";
+                        echo "</div>";
+                    } finally {
+                        unset($miDB);
+                    }
+                }
+            }
+            ?>
         </main>
 
         <footer>

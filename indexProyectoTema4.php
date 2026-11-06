@@ -247,8 +247,32 @@
                             Importacion de datos de la bases de datos XML
                         </td>
                         <td>
+                            <a href="codigoPHP/ejercicio07XMLPDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
+                            <a href="mostrarcodigo/mostrarEjercicio07XMLPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            7
+                        </td>
+                        <td>
+                            Importacion de datos de la bases de datos JSON
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio07JSONPDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio07JSONPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                     <tr>

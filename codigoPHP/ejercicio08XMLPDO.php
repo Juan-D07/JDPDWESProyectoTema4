@@ -62,7 +62,7 @@
                     // Instanciamos el objeto DOMDocument (versión 1.0, codificación UTF-8)
                     $documentoXML = new DOMDocument('1.0', 'UTF-8');
                     // Formatear la salida para que el XML tenga saltos de línea (sea legible)
-                    //$documentoXML->formatOutput = true;
+                    $documentoXML->formatOutput = true;
 
                     // Creamos el elemento raiz departamentos y lo añadimos al documento
                     // Crea un nuevo nodo elemento

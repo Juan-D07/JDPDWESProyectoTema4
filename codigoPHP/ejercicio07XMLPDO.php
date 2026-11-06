@@ -46,7 +46,6 @@
             <?php
             // Archivo con las variables de conexion a la base de datos
             require_once '../config/configDBPDO.php';
-
             if (file_exists($_SERVER["DOCUMENT_ROOT"] . '/JDPDWESProyectoTema4/tmp/departamentos.xml')) {
 
                 try {
@@ -59,6 +58,7 @@
 
                     //Obtenemos una lista con los elementos
                     $aDepartamentos = $documentoXML->getElementsByTagName('departamento');
+                    
 
                     // Si hay un elemento o mas, recorre la lista de deparatamentos
                     if ($aDepartamentos->length > 0) {
@@ -71,69 +71,49 @@
                         INSERT INTO T02_Departamento VALUES (
                         :codDepartamento,
                         :descDepartamento,
-                        :fechaAltaDepartamento,
-                        :volumenNegocioDepartamento,
+                        :fechaCreacionDepartamento,
+                        :volumenDeNegocio,
                         :fechaBajaDepartamento)
                         sql;
                         //preparamos la insercion
                         $insercionDepartamento = $miDB->prepare($sqlInsert);
 
-                        // Creamos el elemento raiz departamentos y lo añadimos al documento
-                        // Crea un nuevo nodo elemento
-                        $raiz = $documentoXML->createElement('departamentos');
-                        // Añade un nuevo hijo al final de los hijos
-                        $documentoXML->appendChild($raiz);
 
-                        // Recorremos los registros de la base de datos
-                        while ($oDepartamento = $DatosDepartamentos->fetchObject()) {
+                        // Recorremos los departamentos del documento xml
+                        foreach ($aDepartamentos as $departamento) {
+                            
+                            // extraemos el valor de cada elemento del departamento
+                            $codDepartamento = $departamento->getElementsByTagName('CodDepartamento')->item(0)->nodeValue;
+                            $descDepartamento = $departamento->getElementsByTagName('DescDepartamento')->item(0)->nodeValue;
+                            $fechaCreacionDepartamento = $departamento->getElementsByTagName('FechaCreacionDepartamento')->item(0)->nodeValue;
+                            $volumenDeNegocio = $departamento->getElementsByTagName('VolumenDeNegocio')->item(0)->nodeValue;
+                            $nullFechaBaja = $departamento->getElementsByTagName('FechaBajaDepartamento')->item(0);
+                            
+                            //comprobacion del elemento fecha baja
+                            //                        si exisiste / no es null  &&   que su valor no sea vacio  return valor                                                     
+                            $fechaBajaDepartamento = ($nullFechaBaja && trim($nullFechaBaja->nodeValue) !== '') ? $nullFechaBaja->nodeValue : null;
 
-                            // Creamos el departamento para cada registro
-                            $sDepartamento = $documentoXML->createElement('departamento');
-
-                            // Creamos el codigo, añadimos el texto y lo colgamos de departamento
-                            $sCodigo = $documentoXML->createElement('CodDepartamento');
-
-                            // Crea un nuevo texto
-                            $sCodigo->appendChild($documentoXML->createTextNode($oDepartamento->T02_CodDepartamento));
-
-                            // Añadimos el codigo al departamento
-                            $sDepartamento->appendChild($sCodigo);
-
-                            // Creamos la descripcion, añadimos el texto y lo colgamos de departamento
-                            $sDescripcion = $documentoXML->createElement('DescDepartamento');
-                            $sDescripcion->appendChild($documentoXML->createTextNode($oDepartamento->T02_DescDepartamento));
-                            $sDepartamento->appendChild($sDescripcion);
-
-                            // Creamos la fecha de alta, añadimos el texto y lo colgamos de departamento
-                            $sfechaAlta = $documentoXML->createElement('FechaCreacionDepartamento');
-                            $sfechaAlta->appendChild($documentoXML->createTextNode($oDepartamento->T02_FechaCreacionDepartamento));
-                            $sDepartamento->appendChild($sfechaAlta);
-
-                            // Creamos la fecha de alta, añadimos el texto y lo colgamos de departamento
-                            $svolumenNegocio = $documentoXML->createElement('VolumenDeNegocio');
-                            $svolumenNegocio->appendChild($documentoXML->createTextNode($oDepartamento->T02_VolumenDeNegocio));
-                            $sDepartamento->appendChild($svolumenNegocio);
-
-                            // Creamos la fecha de alta, añadimos el texto y lo colgamos de departamento
-                            $sfechaBaja = $documentoXML->createElement('FechaBajaDepartamento');
-                            $sfechaBaja->appendChild($documentoXML->createTextNode($oDepartamento->T02_FechaBajaDepartamento));
-                            $sDepartamento->appendChild($sfechaBaja);
-
-                            // Colgamos el departamento completo de la raiz departamentos
-                            $raiz->appendChild($sDepartamento);
+                            // Ejecutamos la consulta preparada pasando el array asociativo con los nombres de los campos
+                            $insercionDepartamento->execute([
+                                ':codDepartamento' => $codDepartamento,
+                                ':descDepartamento' => $descDepartamento,
+                                ':fechaCreacionDepartamento' => $fechaCreacionDepartamento,
+                                ':volumenDeNegocio' => $volumenDeNegocio,
+                                ':fechaBajaDepartamento' => $fechaBajaDepartamento
+                            ]);
                         }
-
-                        // Guardamos el archivo XML generado en el servidor
-                        // Guarda el documento XML en un fichero
-                        $documentoXML->save($_SERVER["DOCUMENT_ROOT"] . '/JDPDWESProyectoTema4/tmp/departamentos.xml');
-
+                        //Ejecutamos los inserts 
+                        $miDB->commit();
+                        
                         // Mostramos el mensaje y el enlace web
-                        echo "<h3>Exportacion completada con exito.</h3>";
-                        echo "<p>El archivo se ha guardado en: <b>" . $_SERVER['DOCUMENT_ROOT'] . "/JDPDWESProyectoTema4/tmp/departamentos.xml</b></p>";
-                        echo "<a href='../tmp/departamentos.xml' target='_blank' style='color: #green; font-weight: bold; text-decoration: underline;'>Ver archivo XML</a>";
+                        echo "<h3>Importacion completada con exito.</h3>";
+                        echo "<p>Se han importado $aDepartamentos->length departamentos del archivo guardado en: <b>" . $_SERVER['DOCUMENT_ROOT'] . "/JDPDWESProyectoTema4/tmp/departamentos.xml</b></p>";
+                        echo "<a href='ejercicio02PDO.php' target='_blank' style='color: #green; font-weight: bold; text-decoration: underline;'>Ver Tabla</a>";
                     }
                 } catch (PDOException $miExceptionPDO) {
                     // Captura errores de PDO
+                    //si hay un error deshace los cambios con rollback
+                    $miDB->rollBack();
                     echo "<div class='error'>";
                     echo "<h3 style='margin-top:0;'>Error en la base de datos.</h3>";
                     echo "<p><b>Mensaje:</b> " . $miExceptionPDO->getMessage() . "</p>";
@@ -144,7 +124,8 @@
                     unset($miDB);
                 }
             } else {
-                
+                echo "<p>El archivo <b>" . $_SERVER['DOCUMENT_ROOT'] . "/JDPDWESProyectoTema4/tmp/departamentos.xml</b> no existe</p>";
+
             }
             ?>
         </main>
