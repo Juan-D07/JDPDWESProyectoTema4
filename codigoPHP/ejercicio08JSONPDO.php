@@ -79,11 +79,11 @@
                     $sjson= json_encode($aDepartamentos, JSON_PRETTY_PRINT);
                     
                     // Guarda el contenido JSON en un fichero
-                    $ficheroJSON= file_put_contents($_SERVER["DOCUMENT_ROOT"] . '/JDPDWESProyectoTema4/tmp/departamentos.json',$sjson);
+                    $ficheroJSON= file_put_contents($_SERVER["DOCUMENT_ROOT"] . 'JDPDWESProyectoTema4/tmp/departamentos.json',$sjson);
 
                     // Mostramos el mensaje y el enlace web
                     echo "<h3>Exportacion completada con exito.</h3>";
-                    echo "<p>El archivo se ha guardado en: <b>".$_SERVER['DOCUMENT_ROOT'] . "/JDPDWESProyectoTema4/tmp/departamentos.json</b></p>";
+                    echo "<p>El archivo se ha guardado en: <b>".$_SERVER['DOCUMENT_ROOT'] . "JDPDWESProyectoTema4/tmp/departamentos.json</b></p>";
                     echo "<a href='../tmp/departamentos.json' target='_blank' style='color: #green; font-weight: bold; text-decoration: underline;'>Ver archivo JSON</a>";
 
                 }

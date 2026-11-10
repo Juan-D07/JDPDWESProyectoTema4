@@ -111,11 +111,11 @@
 
                     // Guardamos el archivo XML generado en el servidor
                     // Guarda el documento XML en un fichero
-                    $documentoXML->save($_SERVER["DOCUMENT_ROOT"] . '/JDPDWESProyectoTema4/tmp/departamentos.xml');
+                    $documentoXML->save($_SERVER["DOCUMENT_ROOT"] . 'JDPDWESProyectoTema4/tmp/departamentos.xml');
 
                     // Mostramos el mensaje y el enlace web
                     echo "<h3>Exportacion completada con exito.</h3>";
-                    echo "<p>El archivo se ha guardado en: <b>".$_SERVER['DOCUMENT_ROOT'] . "/JDPDWESProyectoTema4/tmp/departamentos.xml</b></p>";
+                    echo "<p>El archivo se ha guardado en: <b>".$_SERVER['DOCUMENT_ROOT'] . "JDPDWESProyectoTema4/tmp/departamentos.xml</b></p>";
                     echo "<a href='../tmp/departamentos.xml' target='_blank' style='color: #green; font-weight: bold; text-decoration: underline;'>Ver archivo XML</a>";
 
                 }
