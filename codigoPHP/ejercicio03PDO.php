@@ -38,7 +38,7 @@
                 padding: 4px;
             }
             .titulo{
-                background-color: orange;               
+                background-color: orange;
             }
             tr:not(.titulo){
                 td:nth-child(4){
@@ -84,11 +84,10 @@
             // Comprueba si el formulario se a enviado
             if (isset($_REQUEST["enviar"])) {
                 // Validar Entrada
-                
-                $aError["T02_CodDepartamento"] = validacionFormularios::comprobarAlfabetico($_REQUEST["T02_CodDepartamento"],3,3,1);
-                $aError["T02_DescDepartamento"] = validacionFormularios::comprobarAlfabetico($_REQUEST["T02_DescDepartamento"],1000,1,1);
-                
-                $aError["T02_FechaCreacionDepartamento"] = validacionFormularios::validarFecha($_REQUEST["T02_FechaCreacionDepartamento"],date("m/d/Y"),"01/01/1900", 1);
+
+                $aError["T02_CodDepartamento"] = validacionFormularios::comprobarAlfabetico($_REQUEST["T02_CodDepartamento"], 3, 3, 1);
+                $aError["T02_DescDepartamento"] = validacionFormularios::comprobarAlfabetico($_REQUEST["T02_DescDepartamento"], 1000, 1, 1);
+                $aError["T02_FechaCreacionDepartamento"] = validacionFormularios::validarFecha($_REQUEST["T02_FechaCreacionDepartamento"], date("m/d/Y"), "01/01/1900", 1);
                 $aError["T02_VolumenDeNegocio"] = validacionFormularios::comprobarFloatMonetarioES($_REQUEST["T02_VolumenDeNegocio"], PHP_FLOAT_MAX, 0, 1);
 
                 foreach ($aError as $value) {
@@ -96,42 +95,45 @@
                         $entradaOK = false;
                     }
                 }
+                // comprobar que el nombre del usuario no exista en la bases de datos
+                try {
+
+                    $miDB = new PDO(DSN, USER, PASS);
+
+                    $sqlSelect = <<<sql
+                        SELECT * FROM T02_Departamento
+                        WHERE T02_CodDepartamento = :codDepartamento
+                        sql;
+                    $selectUsuario = $miDB->prepare($sqlSelect);
+                    // trim elimina espacios antes y despues del texto, saneamiento de datos
+                    $selectUsuario->execute([
+                        ':codDepartamento' => trim($_REQUEST["T02_CodDepartamento"])
+                    ]);
+
+                    if ($selectUsuario->rowCount() != 0) {
+                        $entradaOK = false;
+                        $aError['T02_CodDepartamento'] = "Error, ya existe un departamento con el mismo codigo";
+                    }
+                } catch (PDOException $miExceptionPDO) {
+                    echo "<h3 style='margin-top:0;'>Error en la base de datos.</h3>";
+                    echo "<p><b>Mensaje:</b> " . $miExceptionPDO->getMessage() . "</p>";
+                    echo "<p><b>Código:</b> " . $miExceptionPDO->getCode() . "</p>";
+                    unset($miDB);
+                }
             }
             // El formulario no se ha enviado nunca
             else {
                 $entradaOK = false;
             }
-
+            //si los datos estan bien
             if ($entradaOK) {
                 //Cargar la variable $aRespuestas y tratamiento de datos OK
                 $aRespuesta["T02_CodDepartamento"] = htmlspecialchars($_REQUEST["T02_CodDepartamento"]);
-                $aRespuesta["T02_DescDepartamento"]= htmlspecialchars($_REQUEST["T02_DescDepartamento"]);
+                $aRespuesta["T02_DescDepartamento"] = htmlspecialchars($_REQUEST["T02_DescDepartamento"]);
                 $aRespuesta["T02_FechaCreacionDepartamento"] = new DateTime($_REQUEST["T02_FechaCreacionDepartamento"]);
-                $aRespuesta["T02_VolumenDeNegocio"] = floatval(str_replace(',','.',$_REQUEST["T02_VolumenDeNegocio"]));
+                $aRespuesta["T02_VolumenDeNegocio"] = floatval(str_replace(',', '.', $_REQUEST["T02_VolumenDeNegocio"]));
 
-
-                try{
-                    // inciamos conexion con la base de datos con un objeto PDO
-                    $miDB = new PDO(DSN, USER, PASS);
-
-                    // insercion a la bases de datos sin consulta preparada   
-                    /*            
-                    // Asignacion de variables preparadas para la inserción
-                    $sCodigoDepInsert = $aRespuesta["T02_CodDepartamento"];
-                    $sDescripcionDepInsert = $aRespuesta["T02_DescDepartamento"];
-                    $sFechaCreacionDepInsert = $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d");
-                    $svolumenNegocioDepInsert = $aRespuesta["T02_VolumenDeNegocio"];
-                    // Construccion de la sentencia SQL para insertar el registro (codigo de juan)
-                    $sqlInsert = <<<sql
-                    INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio) VALUES (
-                    '$sCodigoDepInsert',
-                    '$sDescripcionDepInsert',
-                    '$sFechaCreacionDepInsert',
-                    $svolumenNegocioDepInsert)
-                sql;
-                    // Ejecucion de la consulta de insercion devuelviendo el numero de filas (codigo de juan)
-                    $miDB->exec($sqlInsert);
-                     */
+                try {
                     //insersion con cosultapreparada
                     //iniciamos consulta dentro de un heredoc
                     $sqlInsert = <<<sql
@@ -143,21 +145,19 @@
                     null)
                     sql;
                     //preparamos la insercion
-                    $insercionDepartamento=$miDB->prepare($sqlInsert);
+                    $insercionDepartamento = $miDB->prepare($sqlInsert);
                     //array con los datos de departamento
-                    $aDatosDepartamentoInsercion=
-                    [":sDepartamentoCodigo" => $aRespuesta["T02_CodDepartamento"],
-                    ":sDepartamentoDescripcion" => $aRespuesta["T02_DescDepartamento"],
-                    ":sDepartamentoFechaAlta" => $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d"),
-                    ":sDepartamentoVolumenNegocio" => $aRespuesta["T02_VolumenDeNegocio"]];
+                    $aDatosDepartamentoInsercion = [":sDepartamentoCodigo" => $aRespuesta["T02_CodDepartamento"],
+                                ":sDepartamentoDescripcion" => $aRespuesta["T02_DescDepartamento"],
+                                ":sDepartamentoFechaAlta" => $aRespuesta["T02_FechaCreacionDepartamento"]->format("Y-m-d"),
+                                ":sDepartamentoVolumenNegocio" => $aRespuesta["T02_VolumenDeNegocio"]];
                     //ejecutar la insercion
                     $insercionDepartamento->execute($aDatosDepartamentoInsercion);
-                    
+
                     echo "<h4 style='margin:0px;color:green'>Insersion exitosa</h4> <br/>";
-                    
-                    
+
                     $consulta1 = $miDB->query('select * from T02_Departamento');
-                    
+                    //Mostrar Tabla de departamentos
                     echo "<h4 >Tabla departamentos</h4> <br/>";
                     echo '<table>';
                     echo '<tr class="titulo"> <td>Codigo</td> <td>Descripcion</td><td>FechaCreacion</td><td>VolumenNegocio</td><td>FechaBaja</td></tr>';
@@ -165,69 +165,67 @@
                         echo '<tr>';
                         echo '<td>' . $oDepartamento->T02_CodDepartamento . '</td>';
                         echo '<td>' . $oDepartamento->T02_DescDepartamento . '</td>';
-                        $fechaCreacionDepartamento= new DateTime($oDepartamento->T02_FechaCreacionDepartamento);
+                        $fechaCreacionDepartamento = new DateTime($oDepartamento->T02_FechaCreacionDepartamento);
                         echo '<td>' . $fechaCreacionDepartamento->format('d/m/Y') . '</td>';
-                        echo '<td>' . number_format($oDepartamento->T02_VolumenDeNegocio,2,',','.') . ' €</td>';
-                        if (is_null($oDepartamento->T02_FechaBajaDepartamento)){
+                        echo '<td>' . number_format($oDepartamento->T02_VolumenDeNegocio, 2, ',', '.') . ' €</td>';
+                        if (is_null($oDepartamento->T02_FechaBajaDepartamento)) {
                             echo '<td></td>';
-                        }else{
-                            $fechaBajaDepartamento=new DateTime($oDepartamento->T02_FechaBajaDepartamento);
-                            echo '<td>'.$fechaBajaDepartamento->format('d/m/Y').'</td>';
+                        } else {
+                            $fechaBajaDepartamento = new DateTime($oDepartamento->T02_FechaBajaDepartamento);
+                            echo '<td>' . $fechaBajaDepartamento->format('d/m/Y') . '</td>';
                         }
 
                         echo '</tr>';
                     }
                     echo '</table>';
-                    echo "<p><a href='". $_SERVER['PHP_SELF']. "'>Añadir otro departamento</a></p>";
-                    
+                    echo "<p><a href='" . $_SERVER['PHP_SELF'] . "'>Añadir otro departamento</a></p>";
                 } catch (PDOException $e) {
                     echo "<span style='color:red;'> Codigo de error: " . $e->getCode() . " <span><br/>";
                     echo "<span style='color:red;'> Mensaje de error: " . $e->getMessage() . " <span><br/>";
                 } finally {
-                    unset($miDB);    
-                }     
-
+                    unset($miDB);
+                }
             } else {
                 // Mostrar Formulario
                 ?>
-            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" name="formulario" method="post" novalidate>
+                <form action="<?php echo $_SERVER['PHP_SELF'] ?>" name="formulario" method="post" novalidate>
                     <h3>Alta Departamentos</h3>
                     <label for="T02_CodDepartamento" >Codigo del Departamento:</label>
-                    
-                    <input type="text" name="T02_CodDepartamento" id="T02_CodDepartamento" value="<?php echo !empty($_REQUEST["T02_CodDepartamento"]) ? htmlspecialchars($_REQUEST["T02_CodDepartamento"]): '' ?>"/>
-                    
-                    <?php echo !empty($aError["T02_CodDepartamento"]) ? "<span style='color:red;'>" . $aError['T02_CodDepartamento'] . "</span>": '' ?>
+
+                    <input type="text" name="T02_CodDepartamento" id="T02_CodDepartamento" value="<?php echo!empty($_REQUEST["T02_CodDepartamento"])&& empty($aError["T02_CodDepartamento"]) ? htmlspecialchars($_REQUEST["T02_CodDepartamento"]) : '' ?>"/>
+
+    <?php echo!empty($aError["T02_CodDepartamento"]) ? "<span style='color:red;'>" . $aError['T02_CodDepartamento'] . "</span>" : '' ?>
 
                     <br/>
-                    
+
                     <label for="T02_DescDepartamento" >Descripcion del Departamento:</label>
-                    
-                    <input type="text" name="T02_DescDepartamento" id="T02_DescDepartamento" value="<?php echo !empty($_REQUEST["T02_DescDepartamento"]) ? htmlspecialchars($_REQUEST["T02_DescDepartamento"]): '' ?>"/>
-                    
-                    <?php echo !empty($aError["T02_DescDepartamento"]) ? "<span style='color:red;'>" . $aError['T02_DescDepartamento'] . "</span>": '' ?>
+
+                    <input type="text" name="T02_DescDepartamento" id="T02_DescDepartamento" value="<?php echo!empty($_REQUEST["T02_DescDepartamento"]) ? htmlspecialchars($_REQUEST["T02_DescDepartamento"]) : '' ?>"/>
+
+    <?php echo!empty($aError["T02_DescDepartamento"]) ? "<span style='color:red;'>" . $aError['T02_DescDepartamento'] . "</span>" : '' ?>
 
                     <br/>
-                    
+
                     <label for="T02_FechaCreacionDepartamento">Fecha de Creacion:</label>
-                    
-                    <input type="date" name="T02_FechaCreacionDepartamento" id="T02_FechaCreacionDepartamento" value="<?php echo !empty($_REQUEST["T02_FechaCreacionDepartamento"])&&empty($aError["T02_FechaCreacionDepartamento"]) ? htmlspecialchars($_REQUEST["T02_FechaCreacionDepartamento"]): '' ?>"/>
-                    
-                    <?php echo !empty($aError["T02_FechaCreacionDepartamento"]) ? "<span style='color:red;'>" . $aError['T02_FechaCreacionDepartamento'] . "</span>": '' ?>
+
+                    <input type="date" name="T02_FechaCreacionDepartamento" id="T02_FechaCreacionDepartamento" value="<?php echo!empty($_REQUEST["T02_FechaCreacionDepartamento"]) && empty($aError["T02_FechaCreacionDepartamento"]) ? htmlspecialchars($_REQUEST["T02_FechaCreacionDepartamento"]) : '' ?>"/>
+
+    <?php echo!empty($aError["T02_FechaCreacionDepartamento"]) ? "<span style='color:red;'>" . $aError['T02_FechaCreacionDepartamento'] . "</span>" : '' ?>
                     <br/>
                     <div class="advertancia"> Usar una coma para separar los decimales de los enteros</div>
                     <label for="T02_VolumenDeNegocio" >Volumen de Negocio:</label>
-                    
-                    <input type="text" name="T02_VolumenDeNegocio" id="T02_VolumenDeNegocio" value="<?php echo !empty($_REQUEST["T02_VolumenDeNegocio"]) ? htmlspecialchars($_REQUEST["T02_VolumenDeNegocio"]): '' ?>"/>
-                    
-                    <?php echo !empty($aError["T02_VolumenDeNegocio"]) ? "<span style='color:red;'>" . $aError['T02_VolumenDeNegocio'] . "</span>": '' ?>
-                    
+
+                    <input type="text" name="T02_VolumenDeNegocio" id="T02_VolumenDeNegocio" value="<?php echo!empty($_REQUEST["T02_VolumenDeNegocio"]) ? htmlspecialchars($_REQUEST["T02_VolumenDeNegocio"]) : '' ?>"/>
+
+    <?php echo!empty($aError["T02_VolumenDeNegocio"]) ? "<span style='color:red;'>" . $aError['T02_VolumenDeNegocio'] . "</span>" : '' ?>
+
                     <br/>
-                    
+
                     <input type="submit" name="enviar" id="enviar" value="Enviar"/>
                 </form>  
-                <?php
-            }
-            ?>
+                    <?php
+                }
+                ?>
 
         </main>
 
