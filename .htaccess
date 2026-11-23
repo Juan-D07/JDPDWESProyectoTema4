@@ -1,0 +1,10 @@
+
+# Indice de esta carpeta de proyecto (estandar de proyecto por asignatura).
+DirectoryIndex indexLoginLogoffTema5.php
+
+# Si se entra en una carpeta sin indice no se muestra el listado de archivos: da un error 403.
+Options -Indexes
+
+# Control de errores con las paginas de este proyecto (carpeta error/)
+ErrorDocument 404 /MDCDWESProyectoLoginLogoffTema5/error/404.html
+ErrorDocument 403 /MDCDWESProyectoLoginLogoffTema5/error/403.html
