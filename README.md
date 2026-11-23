@@ -27,6 +27,7 @@ Abrir un navegador web.
 Crear nuevas tareas y gestionar las existentes.
 ## 5. Estructura del proyecto
 
+```text
 JDPDWESProyectoTema4/
 ├── indexProyectoTema4.php
 ├── .htaccess
@@ -38,6 +39,7 @@ JDPDWESProyectoTema4/
 ├── tmp
 ├── error
 └── core
+```
 
 ## 6. Funcionalidades
 - Crear conexiones PDO
