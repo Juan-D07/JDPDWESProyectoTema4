@@ -55,5 +55,6 @@ Crear una rama para los cambios.
 Realizar las modificaciones necesarias.
 Guardar los cambios mediante un commit descriptivo.
 Enviar una solicitud de cambios (pull request) para su revisión.
-8. Licencia
+
+## 8. Licencia
 Este proyecto puede distribuirse bajo la licencia MIT si el propietario decide adoptarla. Antes de publicar el proyecto, debe añadirse el archivo de licencia correspondiente y comprobar que se cumplen sus condiciones.
