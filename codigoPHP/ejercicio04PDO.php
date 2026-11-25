@@ -81,8 +81,14 @@
                     // inciamos conexion con la base de datos con un objeto PDO
                     $miDB = new PDO(DSN, USER, PASS);
 
-                    // Ejecucion de la consulta                   
-                    $listaDepartamentos = $miDB->query("select * from T02_Departamento where T02_DescDepartamento like '%" . $aRespuesta['busquedaDescripcion'] . "%'");                    
+                    // Ejecucion sin consulta preparada                   
+//                    $listaDepartamentos = $miDB->query("select * from T02_Departamento where T02_DescDepartamento like '%".$aRespuesta["busquedaDescripcion"]."%'");    
+                    // Ejecucion con consulta preparada
+                    $busquedaDescripcion="%".$aRespuesta["busquedaDescripcion"]."%";
+                    $listaDepartamentos = $miDB->prepare("select * from T02_Departamento where T02_DescDepartamento like :busquedaDescripcion");                    
+                    $listaDepartamentos->bindParam(":busquedaDescripcion", $busquedaDescripcion);
+                    $listaDepartamentos->execute();
+                    
                     echo '<table>';
                     echo '<tr class="titulo"> <td>Codigo</td> <td>Descripcion</td><td>FechaCreacion</td><td>VolumenNegocio</td><td>FechaBaja</td></tr>';
                     while ($oDepartamento = $listaDepartamentos->fetchObject()) {

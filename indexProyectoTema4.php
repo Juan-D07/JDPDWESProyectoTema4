@@ -156,7 +156,7 @@
                             3
                         </td>
                         <td>
-                            Formulario para añadir un departamento a la tabla Departamento con validación de entrada y control de errores
+                            Formulario para añadir un departamento a la tabla Departamento
                          </td>
                         <td>
                             <a href="codigoPHP/ejercicio03PDO.php" >
@@ -200,6 +200,7 @@
                             5
                         </td>
                         <td>
+                            Añade tres registros a nuestra tabla Departamento utilizando una transacción
                         </td>
                         <td>
                             <a href="codigoPHP/ejercicio05PDO.php" >
@@ -221,6 +222,17 @@
                             6
                         </td>
                         <td>
+                            Carga registros en la tabla Departamento utilizando una consulta preparada.
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio06PDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio06PDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
                         </td>
@@ -232,10 +244,35 @@
                             7
                         </td>
                         <td>
+                            Importacion de datos de la bases de datos XML
                         </td>
                         <td>
+                            <a href="codigoPHP/ejercicio07XMLPDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
+                            <a href="mostrarcodigo/mostrarEjercicio07XMLPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            7
+                        </td>
+                        <td>
+                            Importacion de datos de la bases de datos JSON
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio07JSONPDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio07JSONPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                     <tr>
@@ -243,10 +280,35 @@
                             8
                         </td>
                         <td>
+                            Exportacion de datos de la bases de datos XML
                         </td>
                         <td>
+                            <a href="codigoPHP/ejercicio08XMLPDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                         <td>
+                            <a href="mostrarcodigo/mostrarEjercicio08XMLPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            8
+                        </td>
+                        <td>
+                            Exportacion de datos de la bases de datos JSON
+                        </td>
+                        <td>
+                            <a href="codigoPHP/ejercicio08JSONPDO.php" >
+                                <div class="ejecutar-img"><img src="webroot/images/play-32.png" alt="alt"/></div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="mostrarcodigo/mostrarEjercicio08JSONPDO.php" >
+                                <div class="mostrar-img"><img src="webroot/images/eye-3-32.png" alt="alt"/></div>
+                            </a>
                         </td>
                     </tr>
                 </tbody>

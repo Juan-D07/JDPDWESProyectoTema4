@@ -55,19 +55,19 @@
                 $miDB = new PDO(DSN, USER, PASS);
                 
                 //array de datos de departamentos
-                //codigo, descripcion, coluemn
+                //codigo, descripcion, volumen
                 $aDatosDepartamentos=[
-                    ["codDepartamento" => "AAA",
-                    "desDepartamento" => "descripcion a",
-                    "volumenNegocioDepartamento" => 400100.11
+                    [":codDepartamento" => "AAA",
+                    ":desDepartamento" => "descripcion a",
+                    ":volumenNegocioDepartamento" => 400100.11
                     ],
-                    ["codDepartamento" => "BBB",
-                    "desDepartamento" => "descripcion b",
-                    "volumenNegocioDepartamento" => 70100.51
+                    [":codDepartamento" => "BBB",
+                    ":desDepartamento" => "descripcion b",
+                    ":volumenNegocioDepartamento" => 70100.51
                     ],
-                    ["codDepartamento" => "CCC",
-                    "desDepartamento" => "descripcion c",
-                    "volumenNegocioDepartamento" => 40.61
+                    [":codDepartamento" => "CCC",
+                    ":desDepartamento" => "descripcion c",
+                    ":volumenNegocioDepartamento" => 40.61
                     ]
                 ];
                 
@@ -75,9 +75,24 @@
                 $miDB->beginTransaction();
                 
                 foreach ($aDatosDepartamentos as $aDatosCadaDepartamento){
-                    $insercion= 'insert into T02_Departamento values ("'.$aDatosCadaDepartamento["codDepartamento"].'","'.$aDatosCadaDepartamento["desDepartamento"].'",now(),"'.$aDatosCadaDepartamento["volumenNegocioDepartamento"].'",null)';
-                    echo "<span> $insercion </span><br>";
-                    $miDB->exec($insercion);
+                    //insercion sin consulta preparada
+//                    $insercion= 'insert into T02_Departamento values ("'.$aDatosCadaDepartamento[":codDepartamento"].'","'.$aDatosCadaDepartamento[":desDepartamento"].'",now(),"'.$aDatosCadaDepartamento[":volumenNegocioDepartamento"].'",null)';
+//                    echo "<span> $insercion </span><br>";
+//                    $miDB->exec($insercion);
+                    //insercion con consulta preparada
+                    //iniciamos consulta dentro de un heredoc
+                    $sqlInsert = <<<sql
+                    INSERT INTO T02_Departamento VALUES (
+                    :codDepartamento,
+                    :desDepartamento,
+                    now(),
+                    :volumenNegocioDepartamento,
+                    null)
+                    sql;
+                    //preparamos la insercion
+                    $insercionDepartamento=$miDB->prepare($sqlInsert);
+                    //ejecutar la insercion
+                    $insercionDepartamento->execute($aDatosCadaDepartamento);
                 }
                 //aplicamos los cambio
                 $miDB->commit();
