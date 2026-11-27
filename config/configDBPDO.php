@@ -14,5 +14,8 @@ define('DSN', "mysql:host=daw200.local.ieslossauces.es;dbname=DBJDPDWESProyectoT
 define('USER', "userJDPDWESProyectoTema4");
 define('PASS', "paso");
 
-
+//Configuracion de Explotacion
+//define('DSN', "mysql:host=localhost;dbname=DBJDPDWESProyectoTema4;charset=utf8mb4");
+//define('USER', "userJDPDWESProyectoTema4");
+//define('PASS', "paso1234@@@");
 ?>
